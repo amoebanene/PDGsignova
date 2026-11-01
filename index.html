@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Empowering Silence, Amplifying Voices</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TensorFlow.js and Teachable Machine Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700 sticky top-0 z-50 py-4 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            
+            <!-- Brand Logo & Catchphrase -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('home')">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2.5 rounded-xl shadow-indigo-500/20 shadow-lg">
+                    <i class="fa-solid fa-hands-asl-interpreting text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black tracking-wider text-white uppercase">SIGNOVA</h1>
+                    <p class="text-xs font-medium text-indigo-400 italic">"Empowering Silence, Amplifying Voices."</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex items-center gap-2 bg-slate-900/60 p-1.5 rounded-xl border border-slate-700/60">
+                <button onclick="switchPage('home')" id="nav-home" class="nav-link px-4 py-2 rounded-lg text-sm font-semibold transition bg-indigo-600 text-white shadow">
+                    <i class="fa-solid fa-house mr-1.5"></i> Home
+                </button>
+                <button onclick="switchPage('model')" id="nav-model" class="nav-link px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-brain mr-1.5"></i> ASL Model
+                </button>
+                <button onclick="switchPage('about')" id="nav-about" class="nav-link px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-users mr-1.5"></i> About Us
+                </button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINERS -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-8">
+
+        <!-- ==================== HOME PAGE SECTION ==================== -->
+        <section id="page-home" class="space-y-12 py-6">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-indigo-900/40 via-slate-800 to-slate-900 border border-slate-700/70 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <div class="max-w-2xl space-y-6 relative z-10">
+                    <span class="bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-widest">
+                        AI-Powered Accessibility
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+                        Bridging Communication Barriers in Real Time.
+                    </h2>
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                        <strong class="text-indigo-400 font-bold">SIGNOVA</strong> uses computer vision and web-based neural networks to translate American Sign Language (ASL) gestures directly inside your web browser.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="switchPage('model')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-bold text-sm transition shadow-lg shadow-indigo-500/25 flex items-center gap-2">
+                            <i class="fa-solid fa-camera"></i> Launch ASL Classifier
+                        </button>
+                        <button onclick="switchPage('about')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 px-6 py-3.5 rounded-xl font-bold text-sm transition flex items-center gap-2">
+                            Meet Team Signova
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-lg">
+                    <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center text-xl font-bold mb-4 border border-indigo-500/20">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Webcam & File Support</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Recognize gestures live via your webcam or upload images directly for fast testing.</p>
+                </div>
+
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-lg">
+                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-xl font-bold mb-4 border border-emerald-500/20">
+                        <i class="fa-solid fa-font"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Balanced Word Detection</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Features a tuned hold timer (700ms) to ensure accurate word formation without missing letters.</p>
+                </div>
+
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl shadow-lg">
+                    <div class="w-12 h-12 bg-violet-500/10 text-violet-400 rounded-xl flex items-center justify-center text-xl font-bold mb-4 border border-violet-500/20">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Browser-Based Privacy</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Runs entirely in your browser using TensorFlow.js—no camera frames or images are sent to external servers.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== MODEL PAGE SECTION ==================== -->
+        <section id="page-model" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Column: Camera Feed / File Upload -->
+            <div class="lg:col-span-7 flex flex-col space-y-4">
+                
+                <!-- Model Config Bar -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-lg flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Active Teachable Machine Model</span>
+                        <span class="text-xs font-mono text-indigo-400">Model ID: Z4T5NjuXF</span>
+                    </div>
+                    <span id="status-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-700 text-slate-300 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-slate-400"></span> Standby
+                    </span>
+                </div>
+
+                <!-- Webcam / Upload Viewport -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-lg flex flex-col justify-between flex-grow min-h-[380px]">
+                    <div class="relative w-full aspect-video bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800 shadow-inner">
+                        
+                        <!-- Webcam Canvas Container -->
+                        <div id="webcam-container" class="w-full h-full flex items-center justify-center"></div>
+
+                        <!-- Image File Preview Element -->
+                        <img id="image-preview" class="hidden max-h-full max-w-full object-contain" alt="Uploaded sign preview">
+
+                        <!-- Placeholder Icon -->
+                        <div id="camera-placeholder" class="text-center p-6 text-slate-500">
+                            <i class="fa-solid fa-photo-film text-4xl mb-3 block"></i>
+                            <p class="text-sm">Start your camera or upload an image file to begin classification.</p>
+                        </div>
+
+                        <!-- Live Letter Overlay -->
+                        <div id="live-overlay" class="hidden absolute top-4 left-4 bg-slate-900/85 backdrop-blur border border-slate-700 rounded-xl px-5 py-2.5 flex items-center justify-center min-w-[70px]">
+                            <span id="detected-letter" class="text-3xl font-black text-indigo-400 font-mono tracking-wider">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Input Controls -->
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <button onclick="toggleWebcam()" id="webcam-btn" disabled class="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                            <i class="fa-solid fa-camera"></i> <span id="webcam-btn-text">Start Camera</span>
+                        </button>
+                        
+                        <!-- File Input Button -->
+                        <label class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-2.5 px-4 rounded-xl text-sm transition flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-file-arrow-up"></i> Upload Image
+                            <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Predictions & Word Builder -->
+            <div class="lg:col-span-5 flex flex-col space-y-4">
+                
+                <!-- Output Word Box -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Constructed Word</span>
+                            <span id="char-count" class="text-xs text-slate-500">0 characters</span>
+                        </div>
+                        <div id="sentence-output" class="w-full h-32 bg-slate-950 border border-slate-800 rounded-xl p-3 text-2xl font-mono text-emerald-400 tracking-wide overflow-y-auto custom-scrollbar break-words"></div>
+                    </div>
+
+                    <!-- Text Actions -->
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                        <button onclick="addSpace()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 p-2.5 rounded-xl text-sm font-medium transition flex flex-col items-center justify-center gap-1" title="Add Space">
+                            <i class="fa-solid fa-arrows-left-right text-base"></i>
+                            <span class="text-[10px]">Space</span>
+                        </button>
+                        <button onclick="backspace()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 p-2.5 rounded-xl text-sm font-medium transition flex flex-col items-center justify-center gap-1" title="Backspace">
+                            <i class="fa-solid fa-delete-left text-base"></i>
+                            <span class="text-[10px]">Delete</span>
+                        </button>
+                        <button onclick="clearSentence()" class="bg-rose-600/80 hover:bg-rose-500 text-white p-2.5 rounded-xl text-sm font-medium transition flex flex-col items-center justify-center gap-1 shadow-lg shadow-rose-500/20" title="Clear All">
+                            <i class="fa-solid fa-trash-can text-base"></i>
+                            <span class="text-[10px]">Clear</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detection Hold Timer Progress Bar -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-lg">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Detection Stability</span>
+                        <span class="text-xs text-indigo-400 font-mono">Hold sign steady</span>
+                    </div>
+                    <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden border border-slate-700">
+                        <div id="hold-progress" class="bg-indigo-500 h-full w-0 transition-all duration-75 ease-linear"></div>
+                    </div>
+                </div>
+
+                <!-- Probability Confidence List -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-lg flex-grow flex flex-col">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 block">Model Confidence</span>
+                    <div id="predictions-list" class="space-y-2 max-h-56 overflow-y-auto custom-scrollbar pr-1 flex-grow">
+                        <p class="text-xs text-slate-500 text-center py-6">Initializing predictions...</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ==================== ABOUT US PAGE SECTION ==================== -->
+        <section id="page-about" class="hidden py-6 space-y-10">
+            <!-- Mission Heading -->
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-widest">
+                    Team Roles & Responsibilities
+                </span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Meet Team Signova</h2>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Senior Class 12 team members collaborating across project management, AI development, design, and research.
+                </p>
+            </div>
+
+            <!-- Team Members Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                
+                <!-- Pavitra Suresh -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg hover:border-indigo-500/50 transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-violet-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                            PS
+                        </div>
+                        <h3 class="text-xl font-bold text-white text-center">Pavitra Suresh</h3>
+                        <p class="text-xs font-semibold text-indigo-400 uppercase tracking-wider text-center mt-1 mb-4">Project Leader & Technical Developer</p>
+                        
+                        <div class="space-y-3 text-slate-300 text-xs">
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-indigo-300 block mb-1">Project Leader</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Allocates tasks & schedules timelines.</li>
+                                    <li>Point of contact for stakeholders.</li>
+                                    <li>Resolves team issues & ensures deadlines.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-indigo-300 block mb-1">Tester & Designer</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Tests prototype & gathers user feedback.</li>
+                                    <li>Plans UI layout & user process flow.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-indigo-300 block mb-1">Prototype Builder/Coder</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Trains computer model with data expert.</li>
+                                    <li>Develops prototype codebase.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gowri Sreejith -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg hover:border-indigo-500/50 transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-20 h-20 bg-gradient-to-tr from-emerald-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                            GS
+                        </div>
+                        <h3 class="text-xl font-bold text-white text-center">Gowri Sreejith</h3>
+                        <p class="text-xs font-semibold text-emerald-400 uppercase tracking-wider text-center mt-1 mb-4">Data Expert & Video Producer</p>
+                        
+                        <div class="space-y-3 text-slate-300 text-xs">
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-emerald-300 block mb-1">Data Expert</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Determines data required for AI training.</li>
+                                    <li>Formats data & eliminates unfair bias.</li>
+                                    <li>Ensures ethical sourcing of dataset.</li>
+                                    <li>Collaborates to train the AI model.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-emerald-300 block mb-1">Video Producer</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Films team activities & progress.</li>
+                                    <li>Edits video presentation for submission.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diya Raj -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg hover:border-indigo-500/50 transition flex flex-col justify-between">
+                    <div>
+                        <div class="w-20 h-20 bg-gradient-to-tr from-violet-500 to-fuchsia-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                            DR
+                        </div>
+                        <h3 class="text-xl font-bold text-white text-center">Diya Raj</h3>
+                        <p class="text-xs font-semibold text-violet-400 uppercase tracking-wider text-center mt-1 mb-4">Information Researcher & Communications</p>
+                        
+                        <div class="space-y-3 text-slate-300 text-xs">
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-violet-300 block mb-1">Information Researcher</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Identifies research questions & sources.</li>
+                                    <li>Compiles findings & writes project report.</li>
+                                    <li>Passes key data to project reporter.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/60">
+                                <span class="font-bold text-violet-300 block mb-1">Marketing / Comms Leader</span>
+                                <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+                                    <li>Collates Team Project Logbook.</li>
+                                    <li>Creates content for the video pitch.</li>
+                                    <li>Selects project spokespeople.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 <strong class="text-slate-300">SIGNOVA</strong>. Created by Pavitra Suresh, Gowri Sreejith, and Diya Raj.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const MODEL_URL = "https://teachablemachine.withgoogle.com/models/Z4T5NjuXF/";
+        
+        let model, webcam, maxPredictions;
+        let isWebcamRunning = false;
+        let currentSentence = "";
+        
+        let lastDetectedClass = "";
+        let holdStartTime = 0;
+        
+        const HOLD_THRESHOLD_MS = 700; 
+        const CONFIDENCE_THRESHOLD = 0.85;
+
+        // DOM Element Cache
+        const sentenceOutput = document.getElementById("sentence-output");
+        const charCount = document.getElementById("char-count");
+        const statusBadge = document.getElementById("status-badge");
+        const predictionsList = document.getElementById("predictions-list");
+        const webcamBtn = document.getElementById("webcam-btn");
+        const webcamBtnText = document.getElementById("webcam-btn-text");
+        const holdProgress = document.getElementById("hold-progress");
+        const liveOverlay = document.getElementById("live-overlay");
+        const detectedLetter = document.getElementById("detected-letter");
+        const imagePreview = document.getElementById("image-preview");
+        const cameraPlaceholder = document.getElementById("camera-placeholder");
+        const webcamContainer = document.getElementById("webcam-container");
+
+        // Single Page Navigation Switcher
+        function switchPage(pageName) {
+            document.getElementById("page-home").classList.add("hidden");
+            document.getElementById("page-model").classList.add("hidden");
+            document.getElementById("page-about").classList.add("hidden");
+
+            document.querySelectorAll(".nav-link").forEach(btn => {
+                btn.className = "nav-link px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition";
+            });
+
+            if (pageName === "home") {
+                document.getElementById("page-home").classList.remove("hidden");
+                document.getElementById("nav-home").className = "nav-link px-4 py-2 rounded-lg text-sm font-semibold transition bg-indigo-600 text-white shadow";
+            } else if (pageName === "model") {
+                document.getElementById("page-model").classList.remove("hidden");
+                document.getElementById("nav-model").className = "nav-link px-4 py-2 rounded-lg text-sm font-semibold transition bg-indigo-600 text-white shadow";
+                if (!model) loadModel();
+            } else if (pageName === "about") {
+                document.getElementById("page-about").classList.remove("hidden");
+                document.getElementById("nav-about").className = "nav-link px-4 py-2 rounded-lg text-sm font-semibold transition bg-indigo-600 text-white shadow";
+            }
+        }
+
+        // Initialize and Load Teachable Machine Model
+        async function loadModel() {
+            const modelURL = MODEL_URL + "model.json";
+            const metadataURL = MODEL_URL + "metadata.json";
+
+            updateStatus("loading", "Loading Model...");
+
+            try {
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+                updateStatus("ready", "Model Loaded");
+                webcamBtn.disabled = false;
+            } catch (err) {
+                console.error(err);
+                updateStatus("error", "Failed to Load");
+            }
+        }
+
+        // Webcam Control Logic
+        async function toggleWebcam() {
+            if (isWebcamRunning) {
+                stopWebcam();
+            } else {
+                await startWebcam();
+            }
+        }
+
+        async function startWebcam() {
+            if (!model) return;
+            try {
+                imagePreview.classList.add("hidden");
+                
+                const flip = true;
+                webcam = new tmImage.Webcam(400, 400, flip);
+                await webcam.setup();
+                await webcam.play();
+                window.requestAnimationFrame(loop);
+
+                webcamContainer.innerHTML = "";
+                webcamContainer.appendChild(webcam.canvas);
+                cameraPlaceholder.classList.add("hidden");
+                liveOverlay.classList.remove("hidden");
+
+                isWebcamRunning = true;
+                webcamBtnText.textContent = "Stop Camera";
+                webcamBtn.classList.replace("bg-emerald-600", "bg-rose-600");
+                webcamBtn.classList.replace("hover:bg-emerald-500", "hover:bg-rose-500");
+                updateStatus("active", "Camera Active");
+            } catch (err) {
+                console.warn("Camera access denied or unpermitted.");
+                updateStatus("ready", "Model Ready");
+            }
+        }
+
+        function stopWebcam() {
+            if (webcam) webcam.stop();
+            webcamContainer.innerHTML = "";
+            cameraPlaceholder.classList.remove("hidden");
+            liveOverlay.classList.add("hidden");
+
+            isWebcamRunning = false;
+            webcamBtnText.textContent = "Start Camera";
+            webcamBtn.classList.replace("bg-rose-600", "bg-emerald-600");
+            webcamBtn.classList.replace("hover:bg-rose-500", "hover:bg-emerald-500");
+            updateStatus("ready", "Model Loaded");
+            holdProgress.style.width = "0%";
+        }
+
+        // Main Webcam Inference Loop
+        async function loop() {
+            if (!isWebcamRunning) return;
+            webcam.update();
+            await predict(webcam.canvas);
+            window.requestAnimationFrame(loop);
+        }
+
+        // Run Prediction on Canvas or Image Element
+        async function predict(inputElement) {
+            const prediction = await model.predict(inputElement);
+            prediction.sort((a, b) => b.probability - a.probability);
+            const topPrediction = prediction[0];
+
+            renderPredictionsUI(prediction);
+
+            if (topPrediction && topPrediction.probability >= CONFIDENCE_THRESHOLD) {
+                const label = topPrediction.className.trim();
+                detectedLetter.textContent = label;
+
+                if (!["idle", "background", "nothing"].includes(label.toLowerCase())) {
+                    if (isWebcamRunning) {
+                        handleHoldDetection(label);
+                    }
+                } else {
+                    resetHold();
+                }
+            } else {
+                detectedLetter.textContent = "--";
+                resetHold();
+            }
+        }
+
+        // File Upload Handler
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file || !model) return;
+
+            if (isWebcamRunning) stopWebcam();
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove("hidden");
+                cameraPlaceholder.classList.add("hidden");
+                webcamContainer.innerHTML = "";
+                liveOverlay.classList.remove("hidden");
+
+                imagePreview.onload = async () => {
+                    await predict(imagePreview);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Hold Detection Logic
+        function handleHoldDetection(detectedClass) {
+            const now = Date.now();
+            if (detectedClass === lastDetectedClass) {
+                const elapsed = now - holdStartTime;
+                const progress = Math.min(100, (elapsed / HOLD_THRESHOLD_MS) * 100);
+                holdProgress.style.width = `${progress}%`;
+
+                if (elapsed >= HOLD_THRESHOLD_MS) {
+                    appendCharacter(detectedClass);
+                    resetHold();
+                }
+            } else {
+                lastDetectedClass = detectedClass;
+                holdStartTime = now;
+                holdProgress.style.width = "0%";
+            }
+        }
+
+        function resetHold() {
+            lastDetectedClass = "";
+            holdStartTime = 0;
+            holdProgress.style.width = "0%";
+        }
+
+        // Word & Sentence Helpers
+        function appendCharacter(char) {
+            currentSentence += char;
+            updateSentenceDisplay();
+        }
+
+        function addSpace() {
+            currentSentence += " ";
+            updateSentenceDisplay();
+        }
+
+        function backspace() {
+            currentSentence = currentSentence.slice(0, -1);
+            updateSentenceDisplay();
+        }
+
+        function clearSentence() {
+            currentSentence = "";
+            updateSentenceDisplay();
+        }
+
+        function updateSentenceDisplay() {
+            sentenceOutput.textContent = currentSentence;
+            charCount.textContent = `${currentSentence.length} character${currentSentence.length === 1 ? '' : 's'}`;
+        }
+
+        // Render Confidence Meters
+        function renderPredictionsUI(predictions) {
+            predictionsList.innerHTML = "";
+            predictions.forEach(p => {
+                const percentage = (p.probability * 100).toFixed(1);
+                const item = document.createElement("div");
+                item.className = "flex items-center gap-3 text-xs";
+                item.innerHTML = `
+                    <span class="w-16 font-semibold text-slate-300 truncate">${p.className}</span>
+                    <div class="flex-grow bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-700">
+                        <div class="bg-indigo-500 h-full rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                    <span class="w-12 text-right font-mono text-slate-400">${percentage}%</span>
+                `;
+                predictionsList.appendChild(item);
+            });
+        }
+
+        // Status Badge Helper
+        function updateStatus(state, message) {
+            let colorClass = "bg-slate-400";
+            if (state === "ready") colorClass = "bg-emerald-400";
+            if (state === "loading") colorClass = "bg-amber-400";
+            if (state === "active") colorClass = "bg-indigo-400";
+            if (state === "error") colorClass = "bg-rose-400";
+
+            statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full ${colorClass} animate-pulse"></span> ${message}`;
+        }
+    </script>
+</body>
+</html>
